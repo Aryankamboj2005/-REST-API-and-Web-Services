@@ -1,0 +1,4 @@
+@GET - to fetch the data
+@POST - is for creating the resource 
+@PUT - for updating the resource
+@DELETE - for deleting the resource
