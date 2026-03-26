@@ -74,6 +74,11 @@
             <version>4.13.2 </version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
     </dependencies>
     <properties>
         <jersey.version>3.1.6</jersey.version>

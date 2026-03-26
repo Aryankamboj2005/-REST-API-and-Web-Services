@@ -13,7 +13,7 @@ import jakarta.ws.rs.core.MediaType;
 @Path("alien")
 public class alienResources {
       
-	public alienReporisatory repo = new alienReporisatory();
+	public dataBaseAlienRepo repo = new dataBaseAlienRepo();
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -35,6 +35,16 @@ public class alienResources {
 	public alien getAlienById(@PathParam("id") int id){ //  means if the path have some id then the same 
 		               // id is used in the all the id variablke 
 		 return repo.getAlien(id);
+	}
+	@GET
+	@Path("addAlien/{id}/{name}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public alien addAlien(@PathParam("id") int id, @PathParam("name") String name) {
+		alien a = new alien();
+		a.setMobile(id);
+		a.setName(name);
+		repo.create(a);
+		return a;
 	}
 
 }
