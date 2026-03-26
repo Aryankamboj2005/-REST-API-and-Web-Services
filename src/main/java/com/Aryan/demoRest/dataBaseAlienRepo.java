@@ -62,7 +62,7 @@ public class dataBaseAlienRepo {
 	}
 
 	public void create(alien a1) {
-		String sql = "insert into alien values(?,?)";
+		String sql ="insert into alien values(?,?)";
 		try {
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setInt(1, a1.getMobile());
