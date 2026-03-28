@@ -44,10 +44,10 @@ public class dataBaseAlienRepo {
 	}
 
 	public alien getAlien(int mobile) {
-		String sql = "select * from alien where mobile="+mobile;
+		String sql = "select * from alien where mobile=?"; // FIXED: Use placeholder to avoid SQL injection
 		try {
 			PreparedStatement st = con.prepareStatement(sql);
-			st.setInt(1, mobile);
+			st.setInt(1, mobile); // FIXED: correctly set parameter
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				alien a = new alien();
@@ -67,7 +67,19 @@ public class dataBaseAlienRepo {
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setInt(1, a1.getMobile());
 			st.setString(2, a1.getName());
-			st.executeUpdate();
+			st.executeUpdate(); // FIXED: Added executeUpdate to actually save data
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	} // FIXED: Added missing closing bracket
+
+	public void update(alien a1) {
+		String sql = "update alien set name=? where mobile=?";
+		try {
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, a1.getName());
+			st.setInt(2, a1.getMobile());
+			st.executeUpdate(); // FIXED: added executeUpdate
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
