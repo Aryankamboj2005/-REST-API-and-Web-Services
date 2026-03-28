@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -51,23 +52,60 @@ public class alienResources {
 		repo.create(a);
 		return a;
 	}
-	@PUT
-	@Path("updateAlien/{id}/{name}")
+    @PUT
+    @Path("update") // No ID or Name in the URL
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON}) // use to get the data from the 
+                                                                          // postman (API)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public alien updateAlien(alien a1) { // It gets everything from the Body here
+        
+        // 1. Check if the alien in the Body already exists
+        alien a = repo.getAlien(a1.getMobile());
+        
+        if (a.getMobile() == 0) {
+            // 2. Add if new
+            repo.create(a1);
+        } else {
+            // 3. Update if exists
+            repo.update(a1);
+        }
+        return a1;
+    }
+    
+    @DELETE
+    @Path("delete") // No ID or Name in the URL
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+                                                                          // postman (API)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public alien DeleteAlien(alien a1) { // It gets everything from the Body here
+        
+        // 1. Check if the alien in the Body already exists
+        alien a = repo.getAlien(a1.getMobile());
+        
+        if (a.getMobile() == 0) {
+            // 2. returning the null data 
+            return a1;
+        } else {
+            // 3. deleting the data if exist
+            repo.delete(a1);
+        }
+        return a1;
+    }
+
+    
+	// New method for DELETING data directly through the URL
+	@DELETE
+	@Path("deleteAlien/{id}") 
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public alien updateAlien(@PathParam("id") int id, @PathParam("name") String name) {
-		// 1. First, check if the alien already exists in the database
+	public alien deleteAlienURL(@PathParam("id") int id) {
+		
 		alien a = repo.getAlien(id);
 		
-		if (a.getMobile() == 0) {
-			// 2. If it DOES NOT exist, create a new one
-			a.setMobile(id);
-			a.setName(name);
-			repo.create(a);
-		} else {
-			// 3. If it DOES exist, just update the name
-			a.setName(name);
-			repo.update(a);
+		if (a.getMobile() != 0) {
+			repo.delete(a);
 		}
+		
 		return a;
 	}
- }
+
+	}

@@ -84,4 +84,16 @@ public class dataBaseAlienRepo {
 			System.out.println(e);
 		}
 	}
+	
+	
+	public void delete(alien a1) {
+		String sql ="delete from alien where mobile=?";
+		try {
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, a1.getMobile());
+			st.executeUpdate(); // FIXED: deleting executeUpdate to actually save data
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+	} // FIX
 }
