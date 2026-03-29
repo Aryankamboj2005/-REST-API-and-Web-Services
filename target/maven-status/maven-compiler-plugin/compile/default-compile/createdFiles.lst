@@ -1,5 +1,3 @@
-com\Aryan\demoRest\alien.class
-com\Aryan\demoRest\alienResources.class
-com\Aryan\demoRest\MyResource.class
-com\Aryan\demoRest\alienReporisatory.class
-com\Aryan\demoRest\MyApplication.class
+com\Aryan\SpringBootRestApplication.class
+com\Aryan\GetAlien.class
+com\Aryan\alien.class
